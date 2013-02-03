@@ -59,9 +59,6 @@ Usage:  ota_from_target_files [flags] input_target_files output_ota_package
       Enable or disable the execution of backuptool.sh.
       Disabled by default.
 
-  --override_device <device>
-      Override device-specific asserts. Can be a comma-separated list.
-
   --no_assert <true|false>
       Including this will turn device asserts off.
 
