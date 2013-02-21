@@ -403,7 +403,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
 
   if not OPTIONS.no_assert:
     #AppendAssertions(script, OPTIONS.info_dict)
-	device_specific.FullOTA_Assertions()
+    device_specific.FullOTA_Assertions()
 
   device_specific.FullOTA_InstallBegin()
 
@@ -478,16 +478,12 @@ def LoadSystemFiles(z):
   return out
 
 
-def GetBuildProp(property, z):
-  """Return the fingerprint of the build of a given target-files
-  ZipFile object."""
-  bp = z.read("SYSTEM/build.prop")
-  if not property:
-    return bp
-  m = re.search(re.escape(property) + r"=(.*)\n", bp)
-  if not m:
+def GetBuildProp(prop, info_dict):
+  """Return the fingerprint of the build of a given target-files info_dict."""
+  try:
+    return info_dict.get("build.prop", {})[prop]
+  except KeyError:
     raise common.ExternalError("couldn't find %s in build.prop" % (property,))
-  return m.group(1).strip()
 
 
 def WriteIncrementalOTAPackage(target_zip, source_zip, output_zip):
